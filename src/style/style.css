@@ -1,0 +1,219 @@
+/* Fonts */
+
+
+/* Layouts */
+
+
+
+/* Components */
+/* Header */
+body {
+    background-color: #EAE8FE;
+    width: 100%;
+    /* height: 100%; */
+}
+.wrapper {
+    margin: 0 auto 171px;
+    width: 748px;
+}
+.section-header {
+    background-color: blue;
+    text-align: center;
+}
+
+.img-logo {
+    width: 386px;
+    height: 180px;
+    
+}
+
+
+/* Main */
+
+.section-main {
+    margin-top: 67px;
+    background-color: blanchedalmond;
+    display: grid;
+    grid-template-columns: repeat(2, 360px);
+    /* height: 545px; */
+    gap: 28px;
+}
+
+.main-left {
+    /* display: grid; */
+    width: 360px;
+    height: 545px;
+    /* grid-area: 1/2/1/2; */
+}
+
+.list-drinks {
+    /* width: 94px;
+    height: 130px; */
+    margin: 31px 27px 20px;
+    padding:0;
+    list-style:none;
+    display: grid;
+    grid-template-columns: repeat(3, 94px);
+    grid-template-rows: repeat(2, 130px);
+    gap: 12px;
+    
+}
+
+.list-drinks li {
+    box-sizing:border-box;
+    border:1px solid black;
+    background-color: #FFFFFF;
+    text-align: center;
+    font-size: 9px;
+    border-radius: 10px;
+}
+
+.img-cola {
+    width: 36px;
+    height: 65px;
+    margin: 11px 29px 6px;
+}
+
+.price {
+    box-sizing: border-box;
+    width: 70px;
+    height: 22px;
+    margin: 7px 11px 9px 13px;
+    padding: 5px 16px 5px 15px;
+    border-radius: 50px;
+    background-color: #6327FE;
+    color: #FFFFFF;
+}
+
+.section-select {
+    margin: 0 27px 28px;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 200px 94px;
+    grid-template-rows: 33px 33px 106px;
+    
+}
+
+.balance {
+    font-size: 14px;
+    background-color: green;
+}
+
+.txt-left {
+    float: left;
+    
+}
+
+.txt-right {
+    float: right;
+}
+
+.btn-return, .btn-input, .btn-get {
+    font-size: 13px;
+}
+
+.inp-money::placeholder {
+    color: #BDBDBD;
+}
+
+.list-select {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background-color: aqua;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 12px 18px 12px 12px;
+}
+
+.list-select li {
+    width: 170px;
+    height: 46px;
+    /* padding: 12px 12px 12px 6px; */
+}
+
+.list-select::-webkit-scrollbar {
+    width: 4px;
+}
+
+.list-select::-webkit-scrollbar-thumb {
+    background-color: black;
+}
+
+.list-select::-webkit-scrollbar-track
+
+.main-right {
+    
+}
+
+.money {
+    box-sizing: border-box;
+    background-color: brown;
+    background-clip: content-box;
+    width: 360px;
+    height: 50px;
+    margin-bottom: 20px;
+    padding: 9px 27px 9px;
+    font-size: 14px;
+}
+
+
+
+.section-got {
+    background-color: yellow;
+    width: 360px;
+    height: 474px;
+}
+
+.txt-center {
+    display: inline-block;
+    /* width: 68px;
+    height: 20px; */
+    margin: 25px 146px 0;
+    font-size: 14px;
+}
+
+.list-got {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    /* 양쪽 마진 27px 안먹음 */
+    margin: 13px auto 6px;
+    padding: 12px 18px 0 12px;
+    width: 306px;
+    height: 364px;
+    overflow-y: scroll;
+    background-color: red;
+}
+
+.list-got::-webkit-scrollbar {
+    width: 4px;
+    
+}
+
+.list-got::-webkit-scrollbar-thumb {
+    background-color: black;
+}
+.list-got::-webkit-scrollbar-track {
+    background-color: gray;
+}
+
+.list-got li {
+    width: 276px;
+    height: 46px;
+    background-color: pink;
+}
+
+.section-got .txt-right {
+    font-size: 12px;
+    margin-right: 27px;
+}
+
+
+
+
+
+
+
+
+
