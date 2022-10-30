@@ -138,9 +138,25 @@ getProducts()
 
 const colaList = document.querySelectorAll(".list-drink li");
 const selectedList = [];
+// 180번째 오류 수정
+// const listSelect = document.querySelector(".list-select");
+// let id = undefined;
 
 // 음료 클릭시 카트로 이동
 listDrinks.addEventListener("click", () => {
+  // 180번째 오류 수정
+  // if (event.target.nodeName === "LI") {
+  //   id = event.target.getAttribute("data-id");
+  //   if (products[id].stock === 0) {
+  //     event.target.classList.add("sold-out");
+  //   }
+  // } else if (event.target.parentNode.nodeName === "LI") {
+  //   id = event.target.parentNode.getAttribute("data-id");
+  //   if (products[id].stock === 0) {
+  //     event.target.parentNode.classList.add("sold-out");
+  //   }
+  // }
+
   if (
     event.target.nodeName === "LI" ||
     event.target.parentNode.nodeName === "LI"
@@ -161,7 +177,7 @@ listDrinks.addEventListener("click", () => {
 
     products[id].stock--;
 
-    // 오류 : Cool_Cola & Orange_Cola 반영 안됨
+    // 오류 : li를 클릭했을 때만, li에 품절 표시가 떠야 함
     if (products[id].stock === 0) {
       event.target.classList.add("sold-out");
     }
@@ -204,20 +220,16 @@ listDrinks.addEventListener("click", () => {
       listSelect.appendChild(liEl);
     } else {
       // 음료를 중복 선택했을 때
-      // const cartList = document.querySelectorAll(".list-select li");
-      // console.log(cartList);
-      // selectedList[selectedListId].count++;
-      // cartList.forEach((item) => {
-      //   console.log("data-id", item.getAttribute("data-id"));
-      //   console.log("selectedListId", selectedListId);
-      //   if (item.getAttribute("data-id") == selectedListId) {
-      //     console.log("dkdkdk");
-      // const countSelected = document.querySelectorAll(
-      //   ".list-select li span"
-      // );
-      // item.querySelectorAll("span").innerHTML = "dkdkdk";
-      // }
-      // });
+
+      const cartItems = listSelect.querySelectorAll(`.list-select li`);
+
+      cartItems.forEach((item) => {
+        if (item.getAttribute("data-id") == selectedList[selectedListId].id) {
+          selectedList[selectedListId].count++;
+          item.querySelector("span").textContent =
+            selectedList[selectedListId].count;
+        }
+      });
     }
   }
 });
