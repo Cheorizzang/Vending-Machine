@@ -31,6 +31,9 @@ btnInput.addEventListener("click", () => {
     return;
   }
 
+  inpMoney.value = "";
+  inpMoney.focus();
+
   money -= deposit;
   balance += deposit;
 
@@ -41,7 +44,7 @@ btnInput.addEventListener("click", () => {
 // 거스름돈 반환 버튼
 btnReturn.addEventListener("click", () => {
   if (balance === 0) {
-    alert("잔액이 0원입니다");
+    alert("잔액이 0원입니다.");
     return;
   }
 
@@ -50,46 +53,6 @@ btnReturn.addEventListener("click", () => {
 
   balanceText.innerHTML = balance;
   moneyText.innerHTML = money;
-});
-
-const listGot = document.querySelector(".list-got");
-
-// Map 자료형 : {key, value}
-// Map 자료형 - {key:음료의 id, value:음료의 정보}
-const getMap = new Map();
-
-// 획득 버튼
-btnGet.addEventListener("click", () => {
-  // 획득 버튼을 눌렀을때
-  // 1. 획득한 음료에 처음 저장되는? 음료일때 => 아에 새로 추가를
-  // 2. 이미 있는 음료일때 => 카운트만 올려주면 되고
-
-  selectedList.forEach((item) => {
-    if (getMap.has(item.id)) {
-      getMap.get(item.id).count += item.count;
-      console.log(getMap.get(item.id).count);
-    } else {
-      // 처음 저장될 때 - 문제 없음
-
-      getMap.set(item.id, item);
-
-      const liEl = document.createElement("li");
-
-      const imgEl = document.createElement("img");
-      imgEl.setAttribute("src", item.photo);
-      liEl.appendChild(imgEl);
-
-      const textEl = document.createTextNode(item.title);
-      liEl.appendChild(textEl);
-
-      const spanEl = document.createElement("span");
-      spanEl.textContent = item.count;
-
-      liEl.appendChild(spanEl);
-
-      listGot.appendChild(liEl);
-    }
-  });
 });
 
 // JSON 데이터로 음료 리스트 받아오기
@@ -137,25 +100,29 @@ getProducts()
   });
 
 const colaList = document.querySelectorAll(".list-drink li");
-const selectedList = [];
-// 180번째 오류 수정
-// const listSelect = document.querySelector(".list-select");
-// let id = undefined;
+let selectedList = [];
+const listSelect = document.querySelector(".list-select");
+let id = undefined;
 
 // 음료 클릭시 카트로 이동
 listDrinks.addEventListener("click", () => {
-  // 180번째 오류 수정
-  // if (event.target.nodeName === "LI") {
-  //   id = event.target.getAttribute("data-id");
-  //   if (products[id].stock === 0) {
-  //     event.target.classList.add("sold-out");
-  //   }
-  // } else if (event.target.parentNode.nodeName === "LI") {
-  //   id = event.target.parentNode.getAttribute("data-id");
-  //   if (products[id].stock === 0) {
-  //     event.target.parentNode.classList.add("sold-out");
-  //   }
-  // }
+  // 품절 처리
+  if (event.target.nodeName === "LI") {
+    id = event.target.getAttribute("data-id");
+    if (products[id].stock === 0) {
+      event.target.classList.add("sold-out");
+    }
+  } else if (event.target.parentNode.nodeName === "LI") {
+    id = event.target.parentNode.getAttribute("data-id");
+    if (products[id].stock === 0) {
+      event.target.parentNode.classList.add("sold-out");
+    }
+  }
+
+  if (products[id].stock === 0) {
+    alert("품절된 상품입니다.");
+    return;
+  }
 
   if (
     event.target.nodeName === "LI" ||
@@ -169,18 +136,7 @@ listDrinks.addEventListener("click", () => {
       id = event.target.parentNode.getAttribute("data-id");
     }
 
-    // 품절 처리
-    if (products[id].stock === 0) {
-      alert("품절된 상품입니다.");
-      return;
-    }
-
     products[id].stock--;
-
-    // 오류 : li를 클릭했을 때만, li에 품절 표시가 떠야 함
-    if (products[id].stock === 0) {
-      event.target.classList.add("sold-out");
-    }
 
     // 잔액 부족 처리
     if (products[id].price > balance) {
@@ -199,6 +155,7 @@ listDrinks.addEventListener("click", () => {
         id: id,
         title: products[id].title,
         photo: products[id].photo,
+        price: products[id].price,
         count: 1,
       });
 
@@ -232,4 +189,62 @@ listDrinks.addEventListener("click", () => {
       });
     }
   }
+});
+
+const listGot = document.querySelector(".list-got");
+
+// Map 자료형 : {key, value}
+// Map 자료형 - {key:음료의 id, value:음료의 정보}
+const getMap = new Map();
+
+// 획득 버튼
+btnGet.addEventListener("click", () => {
+  // 획득 버튼을 눌렀을때
+  // 1. 획득한 음료에 처음 저장되는? 음료일때 => 아예 새로 추가를
+  // 2. 이미 있는 음료일때 => 카운트만 올려주면 되고
+  // 3. 카트에 음료가 없을 때 => 오류 메시지 출력
+
+  if (selectedList.length === 0) {
+    alert("카트에 음료가 없습니다.");
+  }
+
+  selectedList.forEach((item) => {
+    if (getMap.has(item.id)) {
+      // 오류 수정 필요
+      getMap.get(item.id).count += item.count;
+      const listGotItem = listGot.querySelector(
+        `li[data-id = '${item.id}'] span`
+      );
+      listGotItem.textContent = getMap.get(item.id).count;
+    } else {
+      // 처음 저장될 때 - 문제 없음
+
+      getMap.set(item.id, item);
+
+      const liEl = document.createElement("li");
+      liEl.setAttribute("data-id", id);
+
+      const imgEl = document.createElement("img");
+      imgEl.setAttribute("src", item.photo);
+      liEl.appendChild(imgEl);
+
+      const textEl = document.createTextNode(item.title);
+      liEl.appendChild(textEl);
+
+      const spanEl = document.createElement("span");
+      spanEl.textContent = item.count;
+
+      liEl.appendChild(spanEl);
+
+      listGot.appendChild(liEl);
+    }
+
+    // 가격 누적
+    totalMoney += item.price * item.count;
+    totalMoneyText.textContent = totalMoney;
+  });
+
+  // 카트 비우기
+  selectedList = [];
+  listSelect.innerHTML = "";
 });
